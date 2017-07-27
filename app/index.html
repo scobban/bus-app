@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>BusUs</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+
+    <script id="dropdown-template" type="text/x-handlebars-template">
+        <option value="{{title}}" data-tag="{{tag}}">{{title}}</option>
+    </script>
+
+    <script id="dropdown-template2" type="text/x-handlebars-template">
+        <option value="{{title}}" data-tag="{{tag}}" data-name="{{name}}" data-forui="{{ui}}">{{name}} to {{title}}</option>
+    </script>
+
+    <script id="dropdown-template3" type="text/x-handlebars-template">
+        <option value="{{title}}" data-tag="{{tag}}" data-name="{{name}}" data-forui="{{ui}}">{{name}} to {{title}}</option>
+    </script>
+
+    <script id="times-template" type="text/x-handlebars-template">
+        <div class="prediction" value="{{title}}" data-routetag="{{tag}}" data-dirtag="{{dirTag}}" data-vehicle="{{vehicle}}">
+            <a href="" class="favorite">&hearts;</a>
+            <p class="details">Bus {{vehicle}} to {{destination}} arrives in</p>
+            <h4 class="minutes">{{minutes}} min</h2>
+            <p class="time">at {{time}}</p>
+        </div>
+    </script>
+
+</head>
+<body>
+
+    <main class="container">
+    
+        <h1>Bus<span>Us<span></h1>
+
+        <p>
+            <label for="route">Route</label><br>
+        	<select id="route">
+                <option value="" disabled selected>Select Route</option>   
+            </select>
+        </p>
+        <p>
+            <label for="direction">Direction</label><br>
+            <select id="direction"></select>
+        </p>
+        <p>
+            <label for="stops">Stops</label><br>
+            <select id="stops"></select>
+        </p>
+        
+        <p id="times" class="output"></p>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/jquery.xml.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAkF_arn5No5F6gNhWBDwHOpxLQjaGJ66k",
+            authDomain: "bus-app-f7cdf.firebaseapp.com",
+            databaseURL: "https://bus-app-f7cdf.firebaseio.com",
+            projectId: "bus-app-f7cdf",
+            storageBucket: "",
+            messagingSenderId: "276731095903"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+	<script src="scripts/main.js"></script>
+	
+</body>
+</html>

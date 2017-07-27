@@ -1,0 +1,11 @@
+{
+  "name": "mbta-bus-times",
+  "version": "1.0.0",
+  "description": "Display MBTA bus times.",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Scott Cobban",
+  "license": "ISC"
+}
