@@ -1,5 +1,16 @@
 'use strict';
 
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAkF_arn5No5F6gNhWBDwHOpxLQjaGJ66k",
+    authDomain: "bus-app-f7cdf.firebaseapp.com",
+    databaseURL: "https://bus-app-f7cdf.firebaseio.com",
+    projectId: "bus-app-f7cdf",
+    storageBucket: "",
+    messagingSenderId: "276731095903"
+};
+firebase.initializeApp(config);
+
 var BusApp = {};
 
 // // check to see if localStorage is 
@@ -237,6 +248,12 @@ $(document).ready(function() {
     GetRoute();
 	
     var routeTag;
+
+    $(document).on("click", ".favorite", function(){
+        var info = $(this).siblings(".details").text();
+        console.log(info);
+        var newFave = localStorage.setItem("details", info);
+    });
 
     $(routeDropdown).on("change", function(){
 
