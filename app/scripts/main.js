@@ -123,6 +123,7 @@ var directionDropdown = $("#direction");
 var stopsDropdown = $("#stops");
 
 var noResultsMessage = "Times are not currently available."
+var errorMessage = "There was an error getting the data. Please refresh and try again."
 
 var urlBase = "https://accesscontrolalloworiginall.herokuapp.com/http://webservices.nextbus.com/service/publicXMLFeed";
 
@@ -140,7 +141,12 @@ function convertTime(eTime) {
 function GetRoute() {
     var request = $.ajax({
     	url: urlBase + "?command=routeList&a=mbta",
-    	dataType: "xml"
+        dataType: "xml",
+        statusCode: {
+            404: function() {
+                $("#times").append(errorMessage);
+            }
+        }
     });
 
     request.done(function(data){
@@ -169,7 +175,12 @@ function GetDirection(routeNumber) {
 
     var request = $.ajax({
         url: urlBase + "?command=routeConfig&a=mbta&r=" + routeNumber,
-        dataType: "xml"
+        dataType: "xml",
+        statusCode: {
+            404: function() {
+                $("#times").append(errorMessage);
+            }
+        }
     });
 
     request.done(function(data){
@@ -211,7 +222,12 @@ function GetTimes(routeNumber, stopTag) {
 
     var request = $.ajax({
         url: urlBase + "?command=predictions&a=mbta&r=" + routeNumber + "&s=" + stopTag,
-        dataType: "xml"
+        dataType: "xml",
+        statusCode: {
+            404: function() {
+                $("#times").append(errorMessage);
+            }
+        }
     });
 
     request.done(function(data){
