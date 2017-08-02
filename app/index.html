@@ -25,8 +25,8 @@
     </script>
 
     <script id="times-template" type="text/x-handlebars-template">
-        <div class="prediction" value="{{title}}" data-routetag="{{tag}}" data-dirtag="{{dirTag}}" data-vehicle="{{vehicle}}">
-            <!-- <span class="favorite">&hearts;</span> -->
+        <div class="prediction" data-stop="{{stop}}" data-vehicle="{{vehicle}}" data-route="{{route}}" data-destination="{{destination}}">
+            <span class="favorite">&hearts;</span>
             <p class="details">Bus {{vehicle}} to {{destination}} arrives in</p>
             <h4 class="minutes">{{minutes}} min</h2>
             <p class="time">at {{time}}</p>
