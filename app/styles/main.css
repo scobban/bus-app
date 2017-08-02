@@ -35,6 +35,7 @@ select {
 .favorite {
 	border: 1px solid #b1b1b1;
 	color: #B1B1B1;
+	cursor: pointer;
 	padding: 2px 6px;
 	position: absolute;
 	right: -1px;
@@ -43,7 +44,6 @@ select {
 
 .prediction {
 	border: 1px solid #B1B1B1;
-	cursor: pointer;
 	text-align: center;
 	padding: 5px 10px;
 	position: relative;
