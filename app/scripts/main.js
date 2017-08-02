@@ -152,7 +152,6 @@ function GetRoute() {
         var routeData = $.xmlToJSON(data);
 
         var route = routeData.body.route;
-        console.log("GetRoute: ", route);
 
         for(var i = 0; i < route.length; i++) {
             var tag = route[i]["@tag"];
@@ -231,14 +230,14 @@ function GetTimes(routeNumber, stopTag) {
 
     request.done(function(data){
         var timesData = $.xmlToJSON(data);
-
-        var times = timesData.body.predictions.direction;
-        // console.log("GetTimes: ", times);
-
-        if (times === undefined ) {
+        
+        if (times === undefined) {
             $("#times").append(noResultsMessage);
             return;
         }
+
+        var times = timesData.body.predictions.direction;
+        // console.log("GetTimes: ", times);
 
         for(var i = 0; i < times.prediction.length; i++) {
             console.log(times);
@@ -282,7 +281,7 @@ $(document).ready(function() {
         GetDirection(routeTag);
     });
 
-    $(directionDropdown).on("change", function(){
+    $(document).on("change", directionDropdown, function(){
         
         clearField("#stops");
         clearField("#times");
@@ -290,6 +289,13 @@ $(document).ready(function() {
         var dropdown = $("#stops");
         var firstOption = "<option disabled selected>Select Stop</option> ";
         dropdown.prepend(firstOption);
+
+        console.log("stopData: ", routeData);
+
+        if (stopData === undefined) {
+            $("#times").append(noResultsMessage);
+            return;
+        }
 
         var tag = $(this).val();
         var routeData = stopData.body.route;
@@ -302,11 +308,16 @@ $(document).ready(function() {
                 break;
             }
         }
+
+        if (direction === undefined) {
+            $("#times").append(noResultsMessage);
+            return;
+        }
+
         for (var m = 0; m < direction.stop.length; m++) {
             for (var p = 0; p < routeData.stop.length; p++) {
                 if (routeData.stop[p]["@tag"] == direction.stop[m]["@tag"]) {
                     stopTag = routeData.stop[p]["@tag"];
-                    // console.log("STOPTAG: " + stopTag);
                     var stopTitle = routeData.stop[p]["@title"];
                     var option = "<option value='" + stopTag + "' data-title='" + stopTitle + "'>" + stopTitle + "</option>";
                     dropdown.append(option);
@@ -317,7 +328,7 @@ $(document).ready(function() {
 
     });
 
-    $(stopsDropdown).on("change", function(){
+    $(document).on("change", stopsDropdown, function(){
 
         clearField("#times");
 
@@ -328,7 +339,6 @@ $(document).ready(function() {
         GetTimes(routeTag, tag);
 
     });
-
 
 });
 
