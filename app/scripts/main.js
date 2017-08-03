@@ -102,18 +102,17 @@ BusApp.createOption3 = function(tagAtt, titleAtt) {
     output.append(compiledOption);
 }
 
-BusApp.createTimes = function(title, tag, name, minutes, time, vehicle, destination) {
-    var template = $("#times-template");
-    var output = $("#times");
-    var timesObject = {
-        title: title,
-        tag: tag,
-        name: name,
+BusApp.createTimes = function(destination, vehicle, route, stop, minutes, time) {
+     var template = $("#times-template");
+     var output = $("#times");
+     var timesObject = {
+        destination: destination,
+        vehicle: vehicle,
+        route: route,
+        stop: stop,
         minutes: minutes,
-        time: time,
-        vehicle: vehicle, 
-        destination: destination
-    }
+        time: time
+     }
     var compiledOption = BusApp.compileItem(template, timesObject);
     output.append(compiledOption);
 }
@@ -242,13 +241,13 @@ function GetTimes(routeNumber, stopTag) {
         }
 
         for(var i = 0; i < times.prediction.length; i++) {
-            var dirTag = times.prediction[i]["@dirTag"];
+            console.log(times);
             var epoch = times.prediction[i]["@epochTime"];
             var vehicle = times.prediction[i]["@vehicle"];
-            var title = times["@title"];
+            var destination = times["@title"];
             var minutes = times.prediction[i]["@minutes"];
             var newTime = convertTime(epoch);
-            BusApp.createTimes(title, dirTag, epoch, minutes, newTime, vehicle, title);
+            BusApp.createTimes(destination, vehicle, routeNumber, stopTag, minutes, newTime);
         }
 
     });
@@ -266,9 +265,11 @@ $(document).ready(function() {
     var routeTag;
 
     $(document).on("click", ".favorite", function(){
-        var info = $(this).siblings(".details").text();
-        console.log(info);
-        var newFave = localStorage.setItem("details", info);
+        var stop = $(this).parents(".prediction").data("stop");
+        var route = $(this).parents(".prediction").data("route");
+        var direction = $(this).parents(".prediction").data("destination");
+        console.log(route + "." + stop);
+        localStorage.setItem("FaveStop", route + "." + stop + "." + direction);
     });
 
     $(routeDropdown).on("change", function(){
@@ -292,7 +293,10 @@ $(document).ready(function() {
         dropdown.prepend(firstOption);
 
         var tag = $(this).val();
+        var directionVal = $(this).attr("data-direction");
         var routeData = stopData.body.route;
+
+        console.log(tag, directionVal);
 
         var stopTag;
 
@@ -308,7 +312,7 @@ $(document).ready(function() {
                     stopTag = routeData.stop[p]["@tag"];
                     // console.log("STOPTAG: " + stopTag);
                     var stopTitle = routeData.stop[p]["@title"];
-                    var option = "<option value='" + stopTag + "' data-title='" + stopTitle + "'>" + stopTitle + "</option>";
+                    var option = "<option value='" + stopTag + "' data-direction='" + directionVal + "' data-title='" + stopTitle + "'>" + stopTitle + "</option>";
                     dropdown.append(option);
                 }
             }
